@@ -6,3 +6,17 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+
+-- GLSL filetype detection
+vim.filetype.add({
+  extension = {
+    vs = "glsl",
+    fs = "glsl",
+    vert = "glsl",
+    frag = "glsl",
+    geom = "glsl",
+    comp = "glsl",
+    tesc = "glsl",
+    tese = "glsl",
+  },
+})

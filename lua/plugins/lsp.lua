@@ -7,6 +7,7 @@ return {
       clangd = {},       -- C/C++
       pyright = {},      -- Python
       ts_ls = {},        -- TypeScript/JavaScript
+      glsl_analyzer = {}, -- GLSL
       rust_analyzer = {  -- Rust
         settings = {
           ["rust-analyzer"] = {
