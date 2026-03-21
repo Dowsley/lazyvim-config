@@ -7,6 +7,9 @@ return {
         explorer = {
           hidden = true,
         },
+        grep = {
+          regex = false,
+        },
       },
     },
   },
