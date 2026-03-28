@@ -6,6 +6,7 @@ return {
       sources = {
         explorer = {
           hidden = true,
+          exclude = { "*.uid" },
         },
         grep = {
           regex = false,
