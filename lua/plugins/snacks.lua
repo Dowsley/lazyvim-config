@@ -1,13 +1,11 @@
 return {
   "folke/snacks.nvim",
   opts = {
-    scroll = { enabled = true },
+    indent = { enabled = false },
+    scroll = { enabled = false },
+    explorer = { enabled = false },
     picker = {
       sources = {
-        explorer = {
-          hidden = true,
-          exclude = { "*.uid" },
-        },
         grep = {
           regex = false,
         },

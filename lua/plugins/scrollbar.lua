@@ -16,7 +16,7 @@ return {
           "search",
           "quickfix",
         },
-        mousemoveevent = true,
+        mousemoveevent = false,
       })
       require("scrollview.contrib.gitsigns").setup()
     end,
