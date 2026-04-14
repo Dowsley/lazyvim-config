@@ -20,6 +20,8 @@ return {
           Visual = { bg = "#1a1a1a" },
           VisualNOS = { bg = "#1a1a1a" },
           PmenuSel = { bg = "#1a1a1a" },
+          NormalFloat = { bg = "#101010" },
+          FloatBorder = { bg = "#101010" },
           LspInlayHint = { fg = "#3a3a3a", bg = "NONE" },
         },
       })

@@ -21,6 +21,17 @@ for _, suffix in ipairs(paths_to_check) do
   end
 end
 
+-- Open telescope file browser instead of netrw when opening a directory
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function(data)
+    if vim.fn.isdirectory(data.file) == 1 then
+      vim.cmd.cd(data.file)
+      vim.cmd.bdelete()
+      require("telescope").extensions.file_browser.file_browser()
+    end
+  end,
+})
+
 -- GLSL filetype detection
 vim.filetype.add({
   extension = {

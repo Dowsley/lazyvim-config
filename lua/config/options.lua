@@ -7,3 +7,7 @@ vim.opt.mousescroll = "ver:3,hor:0"
 vim.opt.updatetime = 200
 vim.opt.timeoutlen = 0
 vim.opt.list = false
+
+-- Disable netrw (the ugly built-in file browser)
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 1
