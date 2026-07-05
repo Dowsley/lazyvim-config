@@ -3,7 +3,6 @@ return {
   opts = {
     inlay_hints = { enabled = true },
     servers = {
-      omnisharp = {}, -- C#
       lua_ls = {}, -- Lua
       clangd = {}, -- C/C++
       pyright = {}, -- Python
