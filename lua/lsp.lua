@@ -11,6 +11,12 @@ local servers = {
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = servers,
+  automatic_enable = false,
+})
+
+vim.diagnostic.config({
+  virtual_text = true,
+  severity_sort = true,
 })
 
 local capabilities = require("blink.cmp").get_lsp_capabilities()
@@ -24,8 +30,6 @@ vim.lsp.config("lua_ls", {
     },
   },
 })
-
-vim.lsp.enable(servers)
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
@@ -46,6 +50,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end, "Format")
     map("[d", function() vim.diagnostic.jump({ count = -1 }) end, "Prev diagnostic")
     map("]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next diagnostic")
+    map("<leader>d", vim.diagnostic.open_float, "Line diagnostics")
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client:supports_method("textDocument/inlayHint") then
@@ -53,3 +58,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
   end,
 })
+
+vim.lsp.enable(servers)
