@@ -26,9 +26,11 @@ opt.updatetime = 200
 
 local map = vim.keymap.set
 map("n", "<leader>e", function() require("oil").toggle_float() end, { desc = "File explorer (oil)" })
-map("n", "<leader><leader>", "<cmd>Files<cr>", { desc = "Find files" })
-map("n", "<leader>,", "<cmd>Buffers<cr>", { desc = "Switch buffer" })
-map("n", "<leader>/", "<cmd>Rg<cr>", { desc = "Search project (ripgrep)" })
+map("n", "<leader><leader>", "<cmd>FzfLua files<cr>", { desc = "Find files" })
+map("n", "<leader>,", "<cmd>FzfLua buffers<cr>", { desc = "Switch buffer" })
+map("n", "<leader>/", "<cmd>FzfLua live_grep<cr>", { desc = "Search project (ripgrep)" })
+map("n", "<leader>ss", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Document symbols" })
+map("n", "<leader>sS", "<cmd>FzfLua lsp_live_workspace_symbols<cr>", { desc = "Workspace symbols" })
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
 
 map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })

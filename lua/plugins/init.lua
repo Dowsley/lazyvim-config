@@ -40,12 +40,12 @@ return {
   },
 
   {
-    "junegunn/fzf",
-    build = function()
-      vim.fn["fzf#install"]()
-    end,
+    "ibhagwan/fzf-lua",
+    cmd = "FzfLua",
+    opts = {
+      defaults = { file_icons = false, git_icons = false },
+    },
   },
-  { "junegunn/fzf.vim", dependencies = { "junegunn/fzf" } },
 
   {
     "stevearc/oil.nvim",
@@ -89,6 +89,21 @@ return {
   },
 
   {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      spec = {
+        { "<leader>b", group = "buffer" },
+        { "<leader>c", group = "code" },
+        { "<leader>g", group = "git" },
+        { "<leader>h", group = "hunks" },
+        { "<leader>r", group = "rename" },
+        { "<leader>s", group = "search" },
+      },
+    },
+  },
+
+  {
     "NeogitOrg/neogit",
     dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
     cmd = "Neogit",
@@ -120,7 +135,7 @@ return {
         map("<leader>hs", gs.stage_hunk, "Stage hunk")
         map("<leader>hr", gs.reset_hunk, "Reset hunk")
         map("<leader>hp", gs.preview_hunk, "Preview hunk")
-        map("<leader>hb", function() gs.blame_line({ full = true }) end, "Blame line")
+        map("<leader>gb", function() gs.blame_line({ full = true }) end, "Blame line")
       end,
     },
   },

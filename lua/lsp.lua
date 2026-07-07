@@ -38,10 +38,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set("n", keys, fn, { buffer = buf, desc = "LSP: " .. desc })
     end
 
-    map("gd", vim.lsp.buf.definition, "Goto definition")
+    map("gd", "<cmd>FzfLua lsp_definitions<cr>", "Goto definition")
     map("gD", vim.lsp.buf.declaration, "Goto declaration")
-    map("gi", vim.lsp.buf.implementation, "Goto implementation")
-    map("gr", vim.lsp.buf.references, "References")
+    map("gi", "<cmd>FzfLua lsp_implementations<cr>", "Goto implementation")
+    map("gr", "<cmd>FzfLua lsp_references<cr>", "References")
     map("K", vim.lsp.buf.hover, "Hover")
     map("<leader>rn", vim.lsp.buf.rename, "Rename")
     map("<leader>ca", vim.lsp.buf.code_action, "Code action")
