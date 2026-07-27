@@ -28,10 +28,10 @@ local map = vim.keymap.set
 
 -- more comfortable in my keyboards, learned from a trusted friend 
 for _, mode in ipairs({ "n", "x", "o" }) do
-  map(mode, "j", "k", { desc = "Up" })
+  map(mode, "j", "j", { desc = "Down" })
   map(mode, "k", "h", { desc = "Left" })
   map(mode, "l", "l", { desc = "Right" })
-  map(mode, ";", "j", { desc = "Down" })
+  map(mode, ";", "k", { desc = "Up" })
 end
 
 map("n", "<leader>e", function() require("oil").toggle_float() end, { desc = "File explorer (oil)" })
