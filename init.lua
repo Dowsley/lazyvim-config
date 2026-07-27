@@ -25,6 +25,15 @@ opt.mousescroll = "ver:3,hor:0"
 opt.updatetime = 200
 
 local map = vim.keymap.set
+
+-- more comfortable in my keyboards, learned from a trusted friend 
+for _, mode in ipairs({ "n", "x", "o" }) do
+  map(mode, "j", "k", { desc = "Up" })
+  map(mode, "k", "h", { desc = "Left" })
+  map(mode, "l", "l", { desc = "Right" })
+  map(mode, ";", "j", { desc = "Down" })
+end
+
 map("n", "<leader>e", function() require("oil").toggle_float() end, { desc = "File explorer (oil)" })
 map("n", "<leader><leader>", "<cmd>FzfLua files<cr>", { desc = "Find files" })
 map("n", "<leader>,", "<cmd>FzfLua buffers<cr>", { desc = "Switch buffer" })
