@@ -47,6 +47,14 @@ return {
         [0xe4e4e4] = tonumber(fg:sub(2), 16),
       }
 
+      -- Floats default to bg+1, which reads as a grey panel over the editor.
+      local bg = "#181818"
+      local floats = {
+        NormalFloat = { fg = fg, bg = bg },
+        FloatBorder = { fg = "#52494e", bg = bg },
+        FloatTitle = { fg = quartz, bg = bg },
+      }
+
       local function apply()
         for name, def in pairs(vim.api.nvim_get_hl(0, {})) do
           if not def.link and corrections[def.fg] then
@@ -56,6 +64,9 @@ return {
         end
         for group, color in pairs(emacs_faithful) do
           vim.api.nvim_set_hl(0, group, { fg = color })
+        end
+        for group, spec in pairs(floats) do
+          vim.api.nvim_set_hl(0, group, spec)
         end
       end
 
