@@ -51,12 +51,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("[d", function() vim.diagnostic.jump({ count = -1 }) end, "Prev diagnostic")
     map("]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next diagnostic")
     map("<leader>d", vim.diagnostic.open_float, "Line diagnostics")
-
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client:supports_method("textDocument/inlayHint") then
-      vim.lsp.inlay_hint.enable(true, { bufnr = buf })
-    end
   end,
 })
 
 vim.lsp.enable(servers)
+
+-- GDScript's language server is provided by the running Godot editor over TCP
+-- (127.0.0.1:6005), so it is not a Mason package and stays out of the list above.
+-- lspconfig ships the config; enabling it connects whenever Godot is open.
+vim.lsp.enable("gdscript")

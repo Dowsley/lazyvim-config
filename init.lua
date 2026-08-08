@@ -16,6 +16,8 @@ opt.smartcase = true
 opt.termguicolors = true
 opt.signcolumn = "yes"
 opt.cursorline = true
+opt.cursorlineopt = "number"
+opt.statuscolumn = "%s%=%{v:relnum == 0 ? v:lnum : v:relnum} "
 opt.scrolloff = 8
 opt.clipboard = "unnamedplus"
 opt.undofile = true
@@ -42,8 +44,12 @@ map("n", "<leader>ss", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Documen
 map("n", "<leader>sS", "<cmd>FzfLua lsp_live_workspace_symbols<cr>", { desc = "Workspace symbols" })
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
 
-map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
+-- Insert mode returns to normal after saving, matching <cmd>w behaviour.
+map({ "n", "x" }, "<C-s>", "<cmd>write<cr>", { desc = "Save" })
+map("i", "<C-s>", "<Esc><cmd>write<cr>", { desc = "Save" })
+
+map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
+map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Close buffer" })
 
 -- Start a server pipe Godot can connect to for external editing
