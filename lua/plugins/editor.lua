@@ -45,6 +45,18 @@ return {
   { "tpope/vim-sleuth" },
 
   {
+    "akinsho/toggleterm.nvim",
+    keys = {
+      { "<leader>t", "<cmd>ToggleTerm<cr>", desc = "Terminal" },
+      { "<C-\\>", "<cmd>ToggleTerm<cr>", mode = { "n", "t" }, desc = "Terminal" },
+    },
+    opts = {
+      direction = "float",
+      float_opts = { border = "rounded" },
+    },
+  },
+
+  {
     "ethanholz/nvim-lastplace",
     config = true,
   },

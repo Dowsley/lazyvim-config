@@ -24,8 +24,10 @@ return {
         ["@preproc"] = quartz,
         ["@type"] = quartz,
         ["@type.qualifier"] = quartz,
-        ["@constant"] = quartz,
         ["@type.builtin"] = quartz,
+        -- Emacs reserves the constant face for literals, not for any
+        -- SCREAMING_CASE identifier the way treesitter does.
+        ["@constant"] = fg,
         ["@constant.builtin"] = quartz,
         ["@boolean"] = quartz,
         ["@number"] = fg,
@@ -36,6 +38,8 @@ return {
         ["@function.call"] = fg,
         ["@function.method"] = fg,
         ["@function.method.call"] = fg,
+        -- The C++ grammar captures any PascalCase method as a constructor.
+        ["@constructor"] = fg,
         ["@module"] = fg,
         ["@property"] = fg,
         ["@variable.member"] = fg,
