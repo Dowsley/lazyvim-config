@@ -7,7 +7,7 @@ return {
     config = function()
       local ensure = {
         "tsx", "typescript", "javascript", "html", "css", "json",
-        "lua", "rust", "python", "c", "cpp", "bash",
+        "lua", "rust", "python", "c", "cpp", "c_sharp", "bash",
         "markdown", "markdown_inline", "gdscript", "glsl", "vim", "vimdoc", "query",
       }
       local installed = require("nvim-treesitter.config").get_installed()

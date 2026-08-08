@@ -1,5 +1,6 @@
--- Mason-managed servers. GDScript is deliberately absent: its server is the
--- running Godot editor over TCP, so it is enabled separately below.
+-- Mason-managed servers. Two are deliberately absent: GDScript, whose server is
+-- the running Godot editor over TCP, and C#, whose Roslyn server is installed
+-- through mason but configured and started by roslyn.nvim.
 local servers = {
   "lua_ls",
   "clangd",
@@ -75,6 +76,23 @@ return {
 
       vim.lsp.enable(servers)
       vim.lsp.enable("gdscript")
+    end,
+  },
+
+  {
+    "seblyng/roslyn.nvim",
+    ft = "cs",
+    dependencies = { "mason-org/mason.nvim" },
+    opts = {},
+    config = function(_, opts)
+      --[[ The server is a mason package rather than an lspconfig server, so it
+           is not covered by mason-lspconfig's ensure_installed. ]]
+      local registry = require("mason-registry")
+      local pkg = registry.get_package("roslyn-language-server")
+      if not pkg:is_installed() then
+        pkg:install()
+      end
+      require("roslyn").setup(opts)
     end,
   },
 }
