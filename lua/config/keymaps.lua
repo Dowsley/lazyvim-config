@@ -2,11 +2,16 @@ local map = vim.keymap.set
 
 -- more comfortable in my keyboards, learned from a trusted friend
 for _, mode in ipairs({ "n", "x", "o" }) do
-  map(mode, "j", "j", { desc = "Down" })
+  map(mode, "j", "k", { desc = "Up" })
   map(mode, "k", "h", { desc = "Left" })
   map(mode, "l", "l", { desc = "Right" })
-  map(mode, ";", "k", { desc = "Up" })
+  map(mode, ";", "j", { desc = "Down" })
+  map(mode, "q", "b", { desc = "Back word" })
+  map(mode, "Q", "B", { desc = "Back WORD" })
 end
+
+map({ "n", "x" }, "b", "q", { desc = "Record macro" })
+map("n", "B", "Q", { desc = "Replay last macro" })
 
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
 
