@@ -51,12 +51,20 @@ return {
         [0xe4e4e4] = tonumber(fg:sub(2), 16),
       }
 
-      -- Floats default to bg+1, which reads as a grey panel over the editor.
-      local bg = "#181818"
-      local floats = {
+      -- Floats and the winbar default to bg+1, which reads as a grey panel
+      -- over the editor.
+      local bg, faint = "#181818", "#52494e"
+      local chrome = {
         NormalFloat = { fg = fg, bg = bg },
-        FloatBorder = { fg = "#52494e", bg = bg },
+        FloatBorder = { fg = faint, bg = bg },
         FloatTitle = { fg = quartz, bg = bg },
+        WinBar = { fg = fg, bg = bg },
+        WinBarNC = { fg = faint, bg = bg },
+        -- Breadcrumbs read as one path, so only the leaf carries full contrast
+        -- and the directories above it recede.
+        DropBarKindFolder = { fg = quartz, bg = bg },
+        DropBarKindFile = { fg = fg, bg = bg },
+        DropBarIconUISeparator = { fg = faint, bg = bg },
       }
 
       local function apply()
@@ -69,7 +77,7 @@ return {
         for group, color in pairs(emacs_faithful) do
           vim.api.nvim_set_hl(0, group, { fg = color })
         end
-        for group, spec in pairs(floats) do
+        for group, spec in pairs(chrome) do
           vim.api.nvim_set_hl(0, group, spec)
         end
       end
