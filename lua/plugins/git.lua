@@ -16,6 +16,16 @@ return {
       { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Git diff view" },
       { "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
     },
+    --[[ Only the option and help panels close on q by default, so everywhere
+         else the key falls through to the global word motion. Closing the
+         tabpage rather than the panel leaves nothing of the view behind. ]]
+    opts = {
+      keymaps = {
+        view = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close diff view" } } },
+        file_panel = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close diff view" } } },
+        file_history_panel = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close diff view" } } },
+      },
+    },
   },
 
   {
