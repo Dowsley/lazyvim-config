@@ -54,6 +54,15 @@ return {
         },
       })
 
+      --[[ Plain JavaScript is only syntax-checked unless a project opts in
+           through jsconfig. This is the same opt-in for the inferred project
+           tsserver falls back on when a file belongs to no project at all. ]]
+      vim.lsp.config("ts_ls", {
+        settings = {
+          implicitProjectConfiguration = { checkJs = true },
+        },
+      })
+
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(event)
           local function map(keys, fn, desc)
