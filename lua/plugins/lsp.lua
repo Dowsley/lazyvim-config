@@ -17,7 +17,7 @@ return {
     version = "*",
     event = "InsertEnter",
     opts = {
-      keymap = { preset = "default" },
+      keymap = { preset = "super-tab" },
       sources = { default = { "lsp", "path", "snippets", "buffer" } },
       fuzzy = { implementation = "prefer_rust_with_warning" },
     },
@@ -80,6 +80,13 @@ return {
           map("[d", function() vim.diagnostic.jump({ count = -1 }) end, "Prev diagnostic")
           map("]d", function() vim.diagnostic.jump({ count = 1 }) end, "Next diagnostic")
           map("<leader>d", vim.diagnostic.open_float, "Line diagnostics")
+
+          --[[ Reformats the just-finished line on newline, following the
+               project's .clang-format (e.g. moving a function's { down). ]]
+          local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
+          if client.name == "clangd" then
+            vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
+          end
         end,
       })
 
