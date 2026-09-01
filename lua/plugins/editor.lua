@@ -60,4 +60,29 @@ return {
     "ethanholz/nvim-lastplace",
     config = true,
   },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {},
+    keys = {
+      { "<leader>st", "<cmd>TodoFzfLua<cr>", desc = "Search todos" },
+      { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo" },
+      { "[t", function() require("todo-comments").jump_prev() end, desc = "Prev todo" },
+    },
+  },
+
+  --[[ Sign-column display and helpers for native vim marks: ma sets mark a,
+       'a jumps to it, dma deletes it, m] / m[ cycle marks in the buffer. ]]
+  {
+    "chentoast/marks.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "<leader>sm", "<cmd>FzfLua marks<cr>", desc = "Search marks" },
+      { "<leader>m", function() require("marks").toggle() end, desc = "Toggle mark on line" },
+      { "<leader>M", function() require("marks").delete_buf() end, desc = "Delete all marks in buffer" },
+    },
+  },
 }
