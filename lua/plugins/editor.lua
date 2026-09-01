@@ -4,6 +4,9 @@ return {
     cmd = "FzfLua",
     opts = {
       defaults = { file_icons = false, git_icons = false },
+      files = {
+        fd_opts = [[--color=never --hidden --type f --type l --exclude .git --exclude .DS_Store]],
+      },
     },
   },
 
@@ -11,7 +14,10 @@ return {
     "stevearc/oil.nvim",
     lazy = false,
     opts = {
-      view_options = { show_hidden = true },
+      view_options = {
+        show_hidden = true,
+        is_always_hidden = function(name) return name == ".DS_Store" end,
+      },
       keymaps = {
         ["q"] = "actions.close",
         ["<Esc>"] = "actions.close",
