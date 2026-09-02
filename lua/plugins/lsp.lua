@@ -45,6 +45,31 @@ return {
 
       vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities() })
 
+      --[[ Cross-file LSP edits (rename, some code actions) land in in-memory
+           buffers only, so a build right after a rename sees stale files on
+           disk. Write every buffer such an edit touches. ]]
+      local apply_workspace_edit = vim.lsp.util.apply_workspace_edit
+      vim.lsp.util.apply_workspace_edit = function(edit, offset_encoding)
+        apply_workspace_edit(edit, offset_encoding)
+        local uris = {}
+        for uri in pairs(edit.changes or {}) do
+          table.insert(uris, uri)
+        end
+        for _, change in ipairs(edit.documentChanges or {}) do
+          if change.textDocument then
+            table.insert(uris, change.textDocument.uri)
+          end
+        end
+        for _, uri in ipairs(uris) do
+          local buf = vim.uri_to_bufnr(uri)
+          if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].modified then
+            vim.api.nvim_buf_call(buf, function()
+              vim.cmd("silent update")
+            end)
+          end
+        end
+      end
+
       vim.lsp.config("lua_ls", {
         settings = {
           Lua = {
