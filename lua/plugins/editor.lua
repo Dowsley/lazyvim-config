@@ -1,3 +1,16 @@
+--[[ Replay global ignores before the notes exception so other ignored files
+     stay hidden. Project ignore files still take precedence. ]]
+local search_args = { "--no-ignore-global" }
+local global_ignore = vim.fn.systemlist({ "git", "config", "--path", "--get", "core.excludesFile" })[1]
+if vim.v.shell_error ~= 0 then
+  global_ignore = (vim.env.XDG_CONFIG_HOME or vim.fn.expand("~/.config")) .. "/git/ignore"
+end
+if global_ignore and vim.fn.filereadable(global_ignore) == 1 then
+  vim.list_extend(search_args, { "--ignore-file", global_ignore })
+end
+vim.list_extend(search_args, { "--ignore-file", vim.fn.stdpath("config") .. "/search.ignore" })
+local search_opts = table.concat(vim.tbl_map(vim.fn.shellescape, search_args), " ")
+
 return {
   {
     "ibhagwan/fzf-lua",
@@ -5,7 +18,11 @@ return {
     opts = {
       defaults = { file_icons = false, git_icons = false },
       files = {
-        fd_opts = [[--color=never --hidden --type f --type l --exclude .git --exclude .DS_Store]],
+        cmd = [[rg --files --color=never --hidden -g '!.git' -g '!.DS_Store' ]] .. search_opts,
+      },
+      grep = {
+        rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 "
+          .. search_opts .. " -e",
       },
     },
   },
@@ -71,7 +88,12 @@ return {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     event = { "BufReadPost", "BufNewFile" },
-    opts = {},
+    opts = function(_, opts)
+      opts.search = opts.search or {}
+      opts.search.args = vim.list_extend({
+        "--color=never", "--no-heading", "--with-filename", "--line-number", "--column",
+      }, search_args)
+    end,
     keys = {
       { "<leader>st", "<cmd>TodoFzfLua<cr>", desc = "Search todos" },
       { "]t", function() require("todo-comments").jump_next() end, desc = "Next todo" },

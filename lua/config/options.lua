@@ -29,6 +29,7 @@ opt.updatetime = 200
 
 vim.filetype.add({
   extension = {
+    metal = "metal",
     vs = "glsl",
     fs = "glsl",
     vert = "glsl",

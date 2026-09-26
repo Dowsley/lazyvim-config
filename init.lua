@@ -1,6 +1,7 @@
 require("config.options")
 require("config.keymaps")
 require("config.godot")
+require("config.metal")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then

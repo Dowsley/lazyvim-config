@@ -88,6 +88,17 @@ return {
         },
       })
 
+      --[[ Metal shaders are served by clangd through the prelude installed in
+           lua/config/metal.lua. clangd has no language id for the dialect, so
+           it is told cpp and picks Metal up from the file extension. ]]
+      local clangd = vim.lsp.config.clangd
+      vim.lsp.config("clangd", {
+        filetypes = vim.list_extend(vim.deepcopy(clangd.filetypes), { "metal" }),
+        get_language_id = function(buf, filetype)
+          return filetype == "metal" and "cpp" or clangd.get_language_id(buf, filetype)
+        end,
+      })
+
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(event)
           local function map(keys, fn, desc)
