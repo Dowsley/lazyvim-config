@@ -31,6 +31,9 @@ return {
     "stevearc/oil.nvim",
     lazy = false,
     opts = {
+      win_options = {
+        signcolumn = "yes:2",
+      },
       view_options = {
         show_hidden = true,
         is_always_hidden = function(name) return name == ".DS_Store" end,
@@ -47,6 +50,39 @@ return {
         padding = 4,
       },
     },
+  },
+
+  {
+    "refractalize/oil-git-status.nvim",
+    dependencies = { "stevearc/oil.nvim" },
+    opts = {},
+    config = function(_, opts)
+      local git_status = require("oil-git-status")
+      git_status.setup(opts)
+
+      local function refresh_visible()
+        local seen = {}
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if not seen[buf] and vim.bo[buf].filetype == "oil" then
+            seen[buf] = true
+            git_status.refresh_buffer(buf)
+          end
+        end
+      end
+
+      local group = vim.api.nvim_create_augroup("OilGitRefresh", { clear = true })
+      vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "TermLeave" }, {
+        group = group,
+        callback = refresh_visible,
+      })
+      local timer = assert(vim.uv.new_timer())
+      timer:start(2000, 2000, vim.schedule_wrap(refresh_visible))
+      vim.api.nvim_create_autocmd("VimLeavePre", {
+        group = group,
+        callback = function() timer:close() end,
+      })
+    end,
   },
 
   {

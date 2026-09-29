@@ -1,30 +1,27 @@
 return {
   {
     "NeogitOrg/neogit",
-    dependencies = { "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" },
+    dependencies = { "nvim-lua/plenary.nvim", "esmuellert/codediff.nvim" },
     cmd = "Neogit",
     keys = {
       { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
     },
-    opts = {},
+    opts = {
+      diff_viewer = "codediff",
+      integrations = { diffview = false, codediff = true },
+    },
   },
 
   {
-    "sindrets/diffview.nvim",
-    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewFileHistory" },
+    "esmuellert/codediff.nvim",
+    cmd = "CodeDiff",
     keys = {
-      { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Git diff view" },
-      { "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
+      { "<leader>gd", "<cmd>CodeDiff<cr>", desc = "Git diff view" },
+      { "<leader>gh", "<cmd>CodeDiff history %<cr>", desc = "File history" },
     },
-    --[[ Only the option and help panels close on q by default, so everywhere
-         else the key falls through to the global word motion. Closing the
-         tabpage rather than the panel leaves nothing of the view behind. ]]
     opts = {
-      keymaps = {
-        view = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close diff view" } } },
-        file_panel = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close diff view" } } },
-        file_history_panel = { { "n", "q", "<cmd>DiffviewClose<cr>", { desc = "Close diff view" } } },
-      },
+      diff = { layout = "inline" },
+      explorer = { view_mode = "tree", auto_open_on_cursor = true },
     },
   },
 

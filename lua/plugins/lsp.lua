@@ -32,7 +32,12 @@ return {
       "saghen/blink.cmp",
     },
     config = function()
-      require("mason").setup()
+      require("mason").setup({
+        registries = {
+          "github:mason-org/mason-registry",
+          "github:Crashdummyy/mason-registry",
+        },
+      })
       require("mason-lspconfig").setup({
         ensure_installed = servers,
         automatic_enable = false,
@@ -79,6 +84,14 @@ return {
         },
       })
 
+      vim.lsp.config("rust_analyzer", {
+        settings = {
+          ["rust-analyzer"] = {
+            diagnostics = { enable = true, experimental = { enable = true } },
+          },
+        },
+      })
+
       --[[ Plain JavaScript is only syntax-checked unless a project opts in
            through jsconfig. This is the same opt-in for the inferred project
            tsserver falls back on when a file belongs to no project at all. ]]
@@ -120,6 +133,12 @@ return {
           --[[ Reformats the just-finished line on newline, following the
                project's .clang-format (e.g. moving a function's { down). ]]
           local client = assert(vim.lsp.get_client_by_id(event.data.client_id))
+          if client.name == "rust_analyzer" then
+            local provider = client.server_capabilities.diagnosticProvider
+            local pull_id = type(provider) == "table" and provider.identifier or nil
+            vim.diagnostic.config({ update_in_insert = true }, vim.lsp.diagnostic.get_namespace(client.id, false))
+            vim.diagnostic.config({ update_in_insert = true }, vim.lsp.diagnostic.get_namespace(client.id, true, pull_id))
+          end
           if client.name == "clangd" then
             vim.lsp.on_type_formatting.enable(true, { client_id = client.id })
           end
@@ -140,7 +159,7 @@ return {
       --[[ The server is a mason package rather than an lspconfig server, so it
            is not covered by mason-lspconfig's ensure_installed. ]]
       local registry = require("mason-registry")
-      local pkg = registry.get_package("roslyn-language-server")
+      local pkg = registry.get_package("roslyn")
       if not pkg:is_installed() then
         pkg:install()
       end
