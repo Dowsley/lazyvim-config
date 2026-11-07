@@ -17,6 +17,21 @@ return {
     cmd = "FzfLua",
     opts = {
       defaults = { file_icons = false, git_icons = false },
+      winopts = { preview = { winopts = { cursorline = false } } },
+      colorschemes = {
+        actions = {
+          ["enter"] = function(selected)
+            if selected[1] then
+              require("config.theme").select(selected[1])
+            end
+          end,
+        },
+        ignore_patterns = {
+          "light", "^catppuccin%-latte$", "^tokyonight%-day$",
+          "^kanagawa%-lotus$", "^rose%-pine%-dawn$", "^dayfox$", "^dawnfox$",
+          "^delek$", "^morning$", "^peachpuff$", "^shine$", "^zellner$",
+        },
+      },
       files = {
         cmd = [[rg --files --color=never --hidden -g '!.git' -g '!.DS_Store' ]] .. search_opts,
       },
@@ -57,6 +72,7 @@ return {
     dependencies = { "stevearc/oil.nvim" },
     opts = {},
     config = function(_, opts)
+      require("config.oil_git").setup()
       local git_status = require("oil-git-status")
       git_status.setup(opts)
 

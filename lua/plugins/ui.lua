@@ -142,13 +142,18 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
+      delay = function(ctx)
+        return (ctx.keys:sub(1, 1) == vim.g.mapleader or ctx.plugin) and 0 or 200
+      end,
       spec = {
         { "<leader>b", group = "buffer" },
         { "<leader>c", group = "code" },
         { "<leader>g", group = "git" },
         { "<leader>h", group = "hunks" },
+        { "<leader>p", group = "preview" },
         { "<leader>r", group = "rename" },
         { "<leader>s", group = "search" },
+        { "<leader>u", group = "appearance" },
       },
     },
   },

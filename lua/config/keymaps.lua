@@ -23,7 +23,9 @@ map("n", "<leader>e", function() require("oil").toggle_float() end, { desc = "Fi
 
 map("n", "<leader><leader>", "<cmd>FzfLua files<cr>", { desc = "Find files" })
 map("n", "<leader>,", "<cmd>FzfLua buffers<cr>", { desc = "Switch buffer" })
-map("n", "<leader>/", "<cmd>FzfLua live_grep<cr>", { desc = "Search project (ripgrep)" })
+map("n", "<leader>/", "<cmd>FzfLua grep_project<cr>", { desc = "Search project (fuzzy)" })
+map("n", "<leader>sc", "<cmd>FzfLua colorschemes<cr>", { desc = "Colorschemes" })
+map("n", "<leader>ut", function() require("config.transparency").toggle() end, { desc = "Transparency" })
 map("n", "<leader>ss", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Document symbols" })
 map("n", "<leader>sS", "<cmd>FzfLua lsp_live_workspace_symbols<cr>", { desc = "Workspace symbols" })
 
@@ -54,3 +56,4 @@ end, { desc = "Find usages (references)" })
 map("n", "<Tab>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 map("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
 map("n", "<leader>bd", "<cmd>bdelete<cr>", { desc = "Close buffer" })
+map("n", "<leader>ba", "<cmd>confirm %bdelete<cr>", { desc = "Close all buffers" })
