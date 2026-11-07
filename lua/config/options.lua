@@ -25,6 +25,7 @@ opt.clipboard = "unnamedplus"
 opt.undofile = true
 opt.splitright = true
 opt.splitbelow = true
+opt.mouse = "a"
 opt.mousescroll = "ver:3,hor:0"
 opt.updatetime = 200
 

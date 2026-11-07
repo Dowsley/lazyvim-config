@@ -14,6 +14,20 @@ map({ "n", "x" }, "b", "q", { desc = "Record macro" })
 map("n", "B", "Q", { desc = "Replay last macro" })
 
 map("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
+--[[ Repeated side clicks carry a click count and otherwise start selections. ]]
+for _, button in ipairs({
+  { "X1", "<C-o>", "Jump back" },
+  { "X2", "<C-i>", "Jump forward" },
+}) do
+  for _, clicks in ipairs({ "", "2-", "3-", "4-" }) do
+    local key = "<" .. clicks .. button[1]
+    map({ "n", "x" }, key .. "Mouse>", function()
+      require("config.jumps").jump(button[2])
+    end, { desc = button[3] })
+    map({ "n", "x" }, key .. "Drag>", "<Nop>")
+    map({ "n", "x" }, key .. "Release>", "<Nop>")
+  end
+end
 
 -- Insert mode returns to normal after saving, matching <cmd>w behaviour.
 map({ "n", "x" }, "<C-s>", "<cmd>write<cr>", { desc = "Save" })
